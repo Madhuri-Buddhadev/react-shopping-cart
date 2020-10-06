@@ -3,7 +3,7 @@ import formatCurrency from '../util';
 
 import { fetchProducts } from '../actions/ProductActions';
 import { connect } from "react-redux";
-
+import {addToCart}  from "../actions/CartActions";
 
  class Products extends Component {
     constructor(props){
@@ -97,4 +97,7 @@ this.props.fetchProducts();
     }
 }
 export default connect(
-    (state) => ({products:state.products.filteredItems}),{fetchProducts,})(Products);
+    (state) => ({products:state.products.filteredItems}),{fetchProducts,
+        addToCart,
+    }
+    )(Products);
