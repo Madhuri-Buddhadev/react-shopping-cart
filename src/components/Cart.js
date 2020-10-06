@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import formatCurrency from "../util";
-
+import Modal from "react-modal";
 import { removeFromCart } from "../actions/CartActions";
 import {connect} from "react-redux";
-
+import {createOrder,clearOrder} from "../actions/OrderActions";
  class Cart extends Component {
   constructor(props) {
     super(props);
@@ -24,13 +24,17 @@ import {connect} from "react-redux";
       email: this.state.email,
       address: this.state.address,
       cartItems: this.props.cartItems,
+      total:this.props.cartItems.reduce((a,c)=>a+c.price*c.count,0),
     };
     this.props.createOrder(order);
 
     
   };
+  closeModal =()=>{
+    this.props.clearOrder();
+  }
   render() {
-    const { cartItems } = this.props;
+    const { cartItems,order } = this.props;
     return (
       <div>
         {cartItems.length === 0 ? (
@@ -40,6 +44,28 @@ import {connect} from "react-redux";
             You have {cartItems.length} in the cart{" "}
           </div>
         )}
+        {
+          order && <Modal isOpen={true}
+          onRequestClose={this.closeModal}>
+            <button className="close-modal" onClick={this.closeModal}>x</button>
+            <div className="order-details">
+              <h3 className="success-message"> Your order is placed</h3>
+        <h2>order {order._id}</h2>
+        <ul>
+          <li>
+            <div>name</div>
+          <div>{order.name}</div>
+          </li>
+          <li>
+            <div>Email</div>
+          <div>{order.email}</div>
+          </li>
+          
+        
+</ul>
+            </div>
+          </Modal>
+        }
         <div>
           <div className="cart">
               
@@ -137,7 +163,8 @@ import {connect} from "react-redux";
 }
 export default connect(
   (state) => ({
+    order:state.order.order,
 cartItems:state.cart.cartItems,
 }),
-{removeFromCart},
+{removeFromCart , createOrder,clearOrder}
 )(Cart);
