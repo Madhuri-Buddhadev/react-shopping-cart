@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import formatCurrency from "../util";
 
-export default class Cart extends Component {
+import { removeFromCart } from "../actions/CartActions";
+import {connect} from "react-redux";
+
+ class Cart extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -23,6 +26,8 @@ export default class Cart extends Component {
       cartItems: this.props.cartItems,
     };
     this.props.createOrder(order);
+
+    
   };
   render() {
     const { cartItems } = this.props;
@@ -130,3 +135,9 @@ export default class Cart extends Component {
     );
   }
 }
+export default connect(
+  (state) => ({
+cartItems:state.cart.cartItems,
+}),
+{removeFromCart},
+)(Cart);
