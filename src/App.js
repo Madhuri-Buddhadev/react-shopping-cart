@@ -3,7 +3,8 @@ import data  from "./data.json";
 import Products from './components/Products';
 import Filter from './components/Filter';
 import Cart from './components/Cart';
-
+import store from './Store';
+import { Provider } from "react-redux";
 //feature 1 
 
 
@@ -82,6 +83,7 @@ filterProducts=(event)=>{
 
   render(){
   return (
+    <Provider store ={store}>
     <div className="grid-container">
       <header>
         <a href ="/" >React Shopping Cart</a>
@@ -108,6 +110,7 @@ filterProducts=(event)=>{
         All right is reserved.
       </footer>
     </div>
+    </Provider>
   );
 }
 }
