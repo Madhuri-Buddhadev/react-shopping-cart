@@ -97,4 +97,4 @@ this.props.fetchProducts();
     }
 }
 export default connect(
-    (state) => ({products:state.products.items}),{fetchProducts,})(Products);
+    (state) => ({products:state.products.filteredItems}),{fetchProducts,})(Products);
